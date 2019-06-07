@@ -64,7 +64,7 @@ describe('api-form actions', () => {
       expect(actions).toHaveLength(2);
       expect(actions[0]).toHaveProperty('type', SET_LOGIN_ERROR_MESSAGE);
       expect(actions[0]).toHaveProperty('payload.message', '');
-      expect(loginUser).toHaveBeenCalledWith('admin', expect.any(String));
+      expect(loginUser).toHaveBeenCalledWith('admin', expect.any(String), expect.any(String));
       done();
     }).catch(done.fail);
   });

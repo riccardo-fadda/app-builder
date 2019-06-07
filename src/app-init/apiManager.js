@@ -6,8 +6,21 @@ import { formattedText } from '@entando/utils';
 import { gotoRoute } from '@entando/router';
 import { ROUTE_HOME, ROUTE_DASHBOARD } from 'app-init/router';
 import pluginsArray from 'entando-plugins';
+import { createRefreshTokenParams } from 'api/login';
 
-config(store, () => gotoRoute(ROUTE_HOME), () => gotoRoute(ROUTE_DASHBOARD));
+config(
+  store,
+  () => gotoRoute(ROUTE_HOME),
+  () => gotoRoute(ROUTE_DASHBOARD),
+  {
+    generateParams: token => createRefreshTokenParams(token),
+    parseResults: response => (
+      response.json()
+        .then(json => (json.payload ? json.payload : json))
+    ),
+  },
+);
+
 store.dispatch(setApi({
   domain: process.env.DOMAIN,
   useMocks: process.env.USE_MOCKS,

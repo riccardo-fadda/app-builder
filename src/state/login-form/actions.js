@@ -28,6 +28,7 @@ export const performLogin = (username, password) => dispatch => (
             dispatch(loginUser(
               username,
               json.access_token || json.payload.access_token,
+              json.refresh_token || json.payload.refresh_token,
             ));
             resolve();
           });

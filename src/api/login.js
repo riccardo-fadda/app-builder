@@ -7,6 +7,19 @@ export const getErrors = (username, password) => (
     [{ code: 1, message: 'invalid credentials' }]
 );
 
+export const createRefreshTokenParams = token => ({
+  uri: '/api/oauth/token',
+  method: METHODS.POST,
+  contentType: 'application/x-www-form-urlencoded',
+  headers: {
+    Authorization: `Basic ${btoa(`${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`)}`,
+  },
+  body: {
+    refresh_token: token,
+    grant_type: 'refresh_token',
+  },
+});
+
 const login = (username, password) => makeRequest({
   uri: '/api/oauth/token',
   method: METHODS.POST,

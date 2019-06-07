@@ -1,7 +1,7 @@
 
 import 'test/enzyme-init';
 
-import login from 'api/login';
+import login, { createRefreshTokenParams } from 'api/login';
 import { makeRequest } from '@entando/apimanager';
 import { BODY_OK } from 'test/mocks/login';
 
@@ -32,5 +32,24 @@ describe('api/login', () => {
       errors: expect.any(Function),
     });
     expect(response).toBeInstanceOf(Promise);
+  });
+});
+
+describe('api/createRefreshTokenParams', () => {
+  it('returns object for refresh token parameters', () => {
+    const response = createRefreshTokenParams('abcdefg');
+    expect(response).toMatchObject({
+      uri: '/api/oauth/token',
+      method: 'POST',
+      contentType: 'application/x-www-form-urlencoded',
+      headers: {
+        Authorization: 'Basic dW5kZWZpbmVkOnVuZGVmaW5lZA==',
+      },
+      body: {
+        refresh_token: 'abcdefg',
+        grant_type: 'refresh_token',
+      },
+    });
+    expect(response).not.toBeInstanceOf(Promise);
   });
 });
