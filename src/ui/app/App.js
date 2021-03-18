@@ -94,6 +94,7 @@ import {
   ROUTE_LICENSE,
   ROUTE_CLONE_WIDGET,
   ROUTE_EMAIL_CONFIG,
+  ROUTE_USER_FEEDBACK,
 } from 'app-init/router';
 
 import LoginFormContainer from 'ui/login/LoginFormContainer';
@@ -188,6 +189,7 @@ import entandoApps from 'entando-apps';
 import AboutPage from 'ui/about/AboutPage';
 import LicensePage from 'ui/license/LicensePage';
 import getRuntimeEnv from 'helpers/getRuntimeEnv';
+import UserFeedbackPage from 'ui/user-feedback/UserFeedbackPage';
 
 const appsRoutes = entandoApps.reduce((routes, app) => (
   [
@@ -216,6 +218,7 @@ const getRouteComponent = () => {
           </LoginPage>
       )}
       />
+      <Route path={ROUTE_USER_FEEDBACK} component={UserFeedbackPage} />
       <Route path={ROUTE_DASHBOARD} component={DashboardPage} />
       {/* page */}
       <Route exact path={ROUTE_PAGE_TREE} component={PageTreePageContainer} />
