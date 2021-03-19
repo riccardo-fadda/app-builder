@@ -94,6 +94,7 @@ import {
   ROUTE_LICENSE,
   ROUTE_CLONE_WIDGET,
   ROUTE_EMAIL_CONFIG,
+  TEST_ROUTE_FORM,
 } from 'app-init/router';
 
 import LoginFormContainer from 'ui/login/LoginFormContainer';
@@ -182,6 +183,7 @@ import PluginsPageContainer from 'ui/plugins/PluginsPageContainer';
 import PageNotFoundContainer from 'ui/app/PageNotFoundContainer';
 import CloneWidgetPage from 'ui/widgets/clone/CloneWidgetPage';
 import EmailConfigPage from 'ui/email-config/EmailConfigPage';
+import TestDDF from 'ui/test-ddf/TestDDF';
 
 import InternalPage from 'ui/internal-page/InternalPage';
 import entandoApps from 'entando-apps';
@@ -216,6 +218,7 @@ const getRouteComponent = () => {
           </LoginPage>
       )}
       />
+      <Route path={TEST_ROUTE_FORM} component={TestDDF} />
       <Route path={ROUTE_DASHBOARD} component={DashboardPage} />
       {/* page */}
       <Route exact path={ROUTE_PAGE_TREE} component={PageTreePageContainer} />

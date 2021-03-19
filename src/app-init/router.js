@@ -117,3 +117,5 @@ export const ROUTE_CMS_DIGITAL_ASSETS = '/cms/assets';
 // static pages
 export const ROUTE_ABOUT = '/about';
 export const ROUTE_LICENSE = '/license';
+
+export const TEST_ROUTE_FORM = '/test-ddf';
