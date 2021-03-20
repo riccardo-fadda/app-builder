@@ -12,7 +12,8 @@ export const UserFeedbackPageBody = () => {
   const [commentsEnabled, setCommentsEnabled] = useState(false);
   const toggleComments = () => setCommentsEnabled(!commentsEnabled);
 
-  const [comment, setComment] = useState();
+  const [comments, setComments] = useState([]);
+  const addComment = comment => setComments([...comments, comment]);
 
   const handleOverlayClick = (e) => {
     console.log(e.nativeEvent);
@@ -24,7 +25,7 @@ export const UserFeedbackPageBody = () => {
     const x = e.nativeEvent.clientX - 5;
     const y = e.nativeEvent.clientY - 15;
     const el = document.elementFromPoint(x, y);
-    setComment({
+    addComment({
       x,
       y,
       selector: unique(el),
@@ -32,26 +33,22 @@ export const UserFeedbackPageBody = () => {
     });
   };
 
-  useEffect(() => {
-    if (comment) {
-      const div = document.createElement('div');
-      div.id = 'comment';
-      div.style = `position: absolute; top: ${comment.y}px; left: ${comment.x}px;`;
-      div.textContent = comment.text;
-      div.classList.add('Marker');
-      document.getElementById('testArea').appendChild(div);
-    } else {
-      const commentToRemove = document.getElementById('comment');
-      if (commentToRemove !== null) {
-        commentToRemove.remove();
-      }
-    }
-  }, [comment]);
-
   return (
     <InternalPage className="DashboardPage">
       <button onClick={toggleComments}> Toggle Comments</button>
       <div id="testArea" onClick={handleTestAreaClick}>
+        {comments.map(comment => (
+          <div
+            style={{
+              position: 'absolute',
+              top: `${comment.y}px`,
+              left: `${comment.x}px`,
+            }}
+            className="Marker"
+          >
+            {comment.text}
+          </div>
+        ))}
         <div style={{
           backgroundColor: 'yellow',
           height: '100px',
