@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import withPermissions from 'ui/auth/withPermissions';
 import InternalPage from 'ui/internal-page/InternalPage';
 import { ADMINISTRATION_AREA_PERMISSION } from 'state/permissions/const';
+import unique from 'unique-selector';
 
 export const UserFeedbackPageBody = () => {
   // console.log({ userPermissions });
@@ -11,13 +12,66 @@ export const UserFeedbackPageBody = () => {
   const [commentsEnabled, setCommentsEnabled] = useState(false);
   const toggleComments = () => setCommentsEnabled(!commentsEnabled);
 
+  const [comment, setComment] = useState();
+
   const handleOverlayClick = (e) => {
     console.log(e.nativeEvent);
   };
 
+  const handleTestAreaClick = (e) => {
+    console.log(e.nativeEvent);
+    const text = prompt('Comment');
+    const x = e.nativeEvent.clientX - 5;
+    const y = e.nativeEvent.clientY - 15;
+    const el = document.elementFromPoint(x, y);
+    setComment({
+      x,
+      y,
+      selector: unique(el),
+      text,
+    });
+  };
+
+  useEffect(() => {
+    if (comment) {
+      const div = document.createElement('div');
+      div.id = 'comment';
+      div.style = `position: absolute; top: ${comment.y}px; left: ${comment.x}px;`;
+      div.textContent = comment.text;
+      div.classList.add('Marker');
+      document.getElementById('testArea').appendChild(div);
+    } else {
+      const commentToRemove = document.getElementById('comment');
+      if (commentToRemove !== null) {
+        commentToRemove.remove();
+      }
+    }
+  }, [comment]);
+
   return (
     <InternalPage className="DashboardPage">
       <button onClick={toggleComments}> Toggle Comments</button>
+      <div id="testArea" onClick={handleTestAreaClick}>
+        <div style={{
+          backgroundColor: 'yellow',
+          height: '100px',
+          width: '100px',
+        }}
+        />
+        <div style={{
+          backgroundColor: 'orange',
+          height: '100px',
+          width: '100px',
+        }}
+        />
+        <div style={{
+          backgroundColor: 'red',
+          height: '100px',
+          width: '100px',
+        }}
+        />
+      </div>
+
       <div>Comments are <b>{commentsEnabled ? 'enabled' : 'disabled'}</b></div>
       {commentsEnabled && (<div
         style={{
